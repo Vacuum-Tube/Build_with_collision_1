@@ -19,7 +19,7 @@ It can be a bit tricky to use, so a few hints:
 [/olist]
 [*][strike]With upgrades (streets/tracks) it gets more complicated, you can't move the mouse somewhere else without the building proposal disappearing. You have to "catch" the button and stay on the object to be upgraded at the same time. Therefore, the button is closer to the mouse position here.[/strike]
 Upgrades now can be done outside the segment, after hovering.
-[*] ([i]new[/i]) Bulldoze with collision. Sometimes the game doesn't allow bulldozing (e.g. bridge pillar collision), this can be bypassed now.
+[*] ([i]new[/i]) Bulldoze with collision. Sometimes the game doesn't allow bulldozing (e.g. bridge pillar collision), this can be bypassed now. DON'T use it when vehicles are isolated!
 [/list]
 
 This opens up completely new possibilities for Schönbau. In addition, you don't have to turn off collision or change track parameters, you can still detect problems, but allow them specifically. On the other hand, you are then responsible for the collisions on overlapping traffic lanes.
@@ -55,7 +55,7 @@ Die Bedienung kann etwas tricky sein, daher ein paar Hinweise:
 [/olist]
 [*][strike]Bei Upgrades (Straßen/Gleise) wirds noch komplizierter, auch hier kann man mit der Maus nicht woanders hin, ohne dass der Bauvorschlag verschwindet. Man muss den Button gewissermaßen "einfangen" und gleichzeitig auf dem zu upgradenden Objekt bleiben. Daher ist der Button hier näher an der Mausposition.[/strike]
 Upgrades können jetzt auch außerhalb des Segments nach dem Hovern ausgeführt werden.
-[*] ([i]new[/i]) Bulldoze with collision. Manchmal erlaubt das Spiel kein Bulldozen (z.B. Brückenpfeilerkollision), was hiermit umgangen werden kann.
+[*] ([i]new[/i]) Bulldoze with collision. Manchmal erlaubt das Spiel kein Bulldozen (z.B. Brückenpfeilerkollision), was hiermit umgangen werden kann. NICHT bei isolierten Fahrzeugen benutzen!
 [/list]
 
 Dadurch ergeben sich völlig neue Möglichkeiten beim Schönbau. Außerdem muss man die Kollision nicht ausschalten oder die Parameter von Schienen ändern, sondern kann Probleme weiterhin erkennen, aber gezielt erlauben. Logischerweise ist man für Kollisionen auf überschneidenden Verkehrswegen dann selbst verantwortlich.

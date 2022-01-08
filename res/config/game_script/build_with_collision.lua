@@ -45,7 +45,7 @@ end
 
 local function cancelProposal()
 	local mainView = assert(api.gui.util.getById("mainView"), "No mainView")
-	local buildControlComp = assert(mainView:getLayout():getItem(1):getLayout():getItem(0), "No Layer1 Item0")
+	local buildControlComp = mainView:getLayout():getItem(1):getLayout():getItem(0)
 	if buildControlComp and buildControlComp:getName()=="BuildControlComp" then
 		local bLayout = assert(buildControlComp:getLayout():getItem(1), "No buildControlComp Item1")
 		for i=0,bLayout:getNumItems()-1 do
@@ -57,7 +57,7 @@ local function cancelProposal()
 		end
 		-- error("No BuildControlComp::CancelButton")
 	else
-		print("===== Build With Collision - cancelProposal - No BuildControlComp")
+		-- print("===== Build With Collision - cancelProposal - No BuildControlComp")
 	end
 end
 
