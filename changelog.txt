@@ -1,0 +1,8 @@
+2022-01-08:  v1.1
+- Now possible: >Bulldoze< with collision
+- Street/Track Upgrades now can be conveniently done also outside the segment, after hovering
+- Build menu stays open after applying Street/Track proposals
+- Fixed crash on upgrades of town streets
+
+2021-11-21:  v1.0
+Release
