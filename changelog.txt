@@ -1,3 +1,6 @@
+2022-01-20:  v1.2
+- Rare Bugs
+
 2022-01-08:  v1.1
 - Now possible: >Bulldoze< with collision
 - Street/Track Upgrades now can be conveniently done also outside the segment, after hovering

@@ -1,6 +1,7 @@
 local tb = require "bwc.toolbutton"
 local userdata2table = require"bwc.userdata2table"
 local copy_userdata = require"bwc.copy_userdata"
+require "serialize"
 
 local function proposalIsEmpty(proposal)
 	return 
