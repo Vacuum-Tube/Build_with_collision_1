@@ -2,31 +2,27 @@ function data()
 return {
 	en = {
 		mod_desc = [[
-As you have probably experienced many times, building streets, tracks, stations and other objects can be very annoying if there are constant collision warnings in a densely built-up area. For assets/constructions, this can be bypassed using "[b]skipCollision=true[/b]", so you can build despite the collision (but don't get any feedback anymore). For streets/tracks this was not possible until now.
+As you have probably experienced very often, building streets, tracks, stations and other objects can be very annoying if there are many collision warnings in a densely built-up area. For assets/constructions, this can be bypassed using "[b]skipCollision=true[/b]", so you can build despite the collision, but don't get any feedback anymore. For streets/tracks this was not possible until now.
 
-Now it is! With [b]Build with collision[/b] almost all problems that occur when building streets, tracks and constructions (collision, too much slope, too much curvature) and when bulldozing, can be ignored.
-
-When building a proposal, a button [b][i]Build Anyway[/i][/b] is displayed to the right/above the mouse position, similar to the tooltip of [url=https://steamcommunity.com/sharedfiles/filedetails/?id=2298331429]Track/Street Builder Info[/url], but of course only if the proposal is not feasible normally and is not "critical".
-It can be a bit tricky to use, so a few hints:
+Now it is! With [b]Build with collision[/b] almost all problems that occur when building streets, tracks and constructions (collision, too much slope, too much curvature), can be ignored. When building a proposal which would normally not be applicable (but is not "critical"), a button [b][i]Build Anyway[/i][/b] is displayed.
 [list]
-[*]For streets and tracks it should be intuitive. The field appears as with Track/Street Builder Info and stays there (i.e. at the screen position and not at a location on the map). As long as the build suggestion remains displayed, you can click [b][i]Build Anyway[/i][/b]. Eventually with collisions and unwanted snapping, you have to work with the "new shift key" (default: C)
-[*]With constructions/assets it gets a bit more fiddly, because the mouse is always at the building point. Then:
-[olist]
-[*]hold down right click
-[*]navigate to the field
-[*]release right click
-[*]press button with left click
-[/olist]
-[*][strike]With upgrades (streets/tracks) it gets more complicated, you can't move the mouse somewhere else without the building proposal disappearing. You have to "catch" the button and stay on the object to be upgraded at the same time. Therefore, the button is closer to the mouse position here.[/strike]
-Upgrades now can be done outside the segment, after hovering.
-[*] ([i]new[/i]) Bulldoze with collision. Sometimes the game doesn't allow bulldozing (e.g. bridge pillar collision), this can be bypassed now. DON'T use it when vehicles are isolated!
+[*]For streets and tracks, the button appears next to the cursor as with "Track/Street Builder Info". Eventually with collisions and unwanted snapping, you have to work with the "new shift key" (default: C).
+[*]For constructions/assets, there is now a button down in the gamebar. Hold right mouse to get there.
+[*]Upgrades now can be done outside the segment, after hovering.
+[*] [i]Bulldoze with collision.[/i] Sometimes the game doesn't allow bulldozing (e.g. bridge pillar collision), which can be bypassed now. [u]DON'T use it when vehicles are isolated or in a depot![/u]
 [/list]
 
-This opens up completely new possibilities for Schönbau. In addition, you don't have to turn off collision or change track parameters, you can still detect problems, but allow them specifically. On the other hand, you are then responsible for the collisions on overlapping traffic lanes.
-
+This opens up completely new possibilities for Schönbau. In addition, you don't have to turn off collision or change track parameters, you can still detect issues, but allow them specifically. On the other hand, you are then responsible for the collisions on overlapping traffic lanes.
 With this, tracks on streets, streets on airports and many other ideas are possible.
-Therefore, it would be great if other modders would develop special streets/tracks for this!
-So e.g. invisible streets, streets with placeholder areas for streetcar tracks, tracks lowered to street level, ...
+Therefore, it would be great if other modders would develop special streets/tracks for this! (e.g. invisible streets, streets with placeholder areas for streetcar tracks, tracks lowered to street level, ...)
+
+[i]Thanks for all the positive feedback! I did not expect that the mod gets so popular. Here a few mods that have been building up on this:[/i]
+[list]
+[*][url=https://www.transportfever.net/filebase/index.php?entry/6495-kleines-unsichtbares-stra%C3%9Fenfahrzeugpot-und-unsichtbare-wege/ ]Invisible Ways and small invisible depot[/url]
+[*][url=https://www.transportfever.net/filebase/entry/6517-gep%C3%A4ck-und-warentransporter-f%C3%BCr-den-flughafen/ ]Baggage and goods transporter for the airport[/url]
+[*][url=https://www.transportfever.net/filebase/entry/6790-underpass-for-tracks-streets/ ]Underpass for Tracks & Streets[/url]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=2848415950 ]Parallel Tool[/url]
+[/list]
 
 More Info: https://www.transportfever.net/index.php?thread/17979-build-with-collision/
 
@@ -38,34 +34,29 @@ Source Code on [url=https://github.com/Vacuum-Tube/Build_with_collision_1 ]GitHu
 	},
 	de = {
 		mod_desc = [[
-Wie ihr sicher schon oft erlebt habt, kann das Bauen von Straßen, Gleisen, Bahnhöfen und anderen Objekten sehr nervig werden, wenn es in einem zugebauten Gebiet zu dauernden Kollisionswarnungen kommt. Bei Assets/Konstruktionen lässt sich die Meldung mittels "[b]skipCollision=true[/b]" umgehen, man kann so trotz Kollision bauen (erhält aber auch keine Rückmeldung mehr). Für Straßen/Gleise war dies bis dato nicht möglich.
+Wie ihr sicher schon oft erlebt habt, kann das Bauen von Straßen, Gleisen, Bahnhöfen und anderen Objekten sehr nervig werden, wenn es in einem zugebauten Gebiet zu dauernden Kollisionswarnungen kommt. Bei Assets/Konstruktionen lässt sich die Meldung mittels "[b]skipCollision=true[/b]" umgehen, man kann zwar so trotz Kollision bauen, erhält aber auch keine Rückmeldung mehr. Für Straßen/Gleise war dies bis dato nicht möglich.
 
-Jetzt schon! Mit [b]Build with collision[/b] können fast alle Probleme, die beim Bau von Straßen, Gleisen und Konstruktionen auftreten (Kollision, zu große Steigung, zu große Krümmung) sowie beim Bulldozen, ignoriert werden.
-
-Dazu wird beim Bauvorschlag rechts/über der Mausposition das Feld [b][i]Trotzdem Bauen[/i][/b] angezeigt, ähnlich wie der Tooltip von [url=https://steamcommunity.com/sharedfiles/filedetails/?id=2298331429]Track/Street Builder Info[/url], aber natürlich nur, wenn das Bauvorhaben nicht auf normalem Weg durchführbar ist und es nicht "critical" ist.
-Die Bedienung kann etwas tricky sein, daher ein paar Hinweise:
+Jetzt schon! Mit [b]Build with collision[/b] können fast alle Probleme, die beim Bau von Straßen, Gleisen und Konstruktionen auftreten (Kollision, zu große Steigung, zu große Krümmung), ignoriert werden. Dazu wird beim Bauvorhaben, wenn es nicht auf normalem Weg durchführbar ist (und nicht "critical" ist), das Feld [b][i]Trotzdem Bauen[/i][/b] angezeigt.
 [list]
-[*]Bei Straßen und Gleisen sollte es intuitiv sein. Das Feld erscheint wie beim Track/Street Builder Info und bleibt dort allerdings auch (d.h. an der Bildschirmposition und nicht an einer Stelle der Karte). Solange der Bauvorschlag angezeigt bleibt, kann man [b][i]Trotzdem Bauen[/i][/b] klicken. Ggf muss man beim Verlegen mit Kollisionen und unerwünschtem Snappen mit der "neuen shift Taste" (default: C) arbeiten.
-[*]Bei Konstruktionen/Assets wirds etwas fummeliger, da die Maus immer an der Stelle zum Platzieren ist. Dann:
-[olist]
-[*]rechte Maustaste gedrückt halten
-[*]auf das Feld navigieren
-[*]rechte Maustaste loslassen
-[*]mit linker Maustaste Button drücken
-[/olist]
-[*][strike]Bei Upgrades (Straßen/Gleise) wirds noch komplizierter, auch hier kann man mit der Maus nicht woanders hin, ohne dass der Bauvorschlag verschwindet. Man muss den Button gewissermaßen "einfangen" und gleichzeitig auf dem zu upgradenden Objekt bleiben. Daher ist der Button hier näher an der Mausposition.[/strike]
-Upgrades können jetzt auch außerhalb des Segments nach dem Hovern ausgeführt werden.
-[*] ([i]new[/i]) Bulldoze with collision. Manchmal erlaubt das Spiel kein Bulldozen (z.B. Brückenpfeilerkollision), was hiermit umgangen werden kann. NICHT bei isolierten Fahrzeugen benutzen!
+[*]Bei Straßen und Gleisen erscheint der Button neben der Mausposition ähnlich wie beim "Track/Street Builder Info". Ggf muss man beim Verlegen mit Kollisionen und unerwünschtem Snappen mit der "neuen shift Taste" (default: C) arbeiten.
+[*]Bei Konstruktionen/Assets ist ab jetzt ein Button unten in der Leiste. Mit rechter Maustaste festhalten, um dort hinzukommen.
+[*]Upgrades können jetzt auch außerhalb des Segments nach dem Hovern ausgeführt werden.
+[*] [i]Bulldoze with collision.[/i] Manchmal erlaubt das Spiel kein Bulldozen (z.B. Brückenpfeilerkollision), was hiermit umgangen werden kann. [u]NICHT benutzen wenn Fahrzeuge isoliert oder im Depot sind![/u]
 [/list]
 
-Dadurch ergeben sich völlig neue Möglichkeiten beim Schönbau. Außerdem muss man die Kollision nicht ausschalten oder die Parameter von Schienen ändern, sondern kann Probleme weiterhin erkennen, aber gezielt erlauben. Logischerweise ist man für Kollisionen auf überschneidenden Verkehrswegen dann selbst verantwortlich.
-
+Dadurch ergeben sich völlig neue Möglichkeiten beim Schönbau. Außerdem muss man die Kollision nicht ausschalten oder die Parameter von Schienen ändern, sondern kann Probleme weiterhin erkennen, aber gezielt erlauben. Andererseits ist man für Kollisionen auf überschneidenden Verkehrswegen dann selbst verantwortlich.
 Auch Schienen auf Straßen, Straßen auf Flughäfen und viele weitere Ideen sind so möglich.
-Dafür wäre es natürlich klasse, wenn andere Modder spezielle Straßen/Gleise hierfür entwickeln!
-Also z.B. unsichtbare Straßen, Straßen mit Platzhalterbereichen für Tramschienen, Gleise auf Straßenhöhe abgesenkt, ...
+Dafür wäre es natürlich klasse, wenn andere Modder spezielle Straßen/Gleise hierfür entwickeln! (z.B. unsichtbare Straßen, Straßen mit Platzhalterbereichen für Tramschienen, Gleise auf Straßenhöhe abgesenkt, ... )
+
+[i]Danke für das viele positive Feedback! Dass die Mod so beliebt wird, hätte ich damals nicht gedacht. Hier ein paar Mods die inzwischen entstanden sind:[/i]
+[list]
+[*][url=https://www.transportfever.net/filebase/index.php?entry/6495-kleines-unsichtbares-stra%C3%9Fenfahrzeugpot-und-unsichtbare-wege/ ]Kleines unsichtbares Straßenfahrzeugpot und unsichtbare Wege[/url]
+[*][url=https://www.transportfever.net/filebase/entry/6517-gep%C3%A4ck-und-warentransporter-f%C3%BCr-den-flughafen/ ]Gepäck- und Warentransporter für den Flughafen[/url]
+[*][url=https://www.transportfever.net/filebase/entry/6790-underpass-for-tracks-streets/ ]Underpass for Tracks & Streets[/url]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=2848415950 ]Parallel Tool[/url]
+[/list]
 
 Mehr Infos: https://www.transportfever.net/index.php?thread/17979-build-with-collision/
-Anregungen: https://www.transportfever.net/index.php?thread/17995-unsichtbare-stra%C3%9Fen/
 
 Source Code on [url=https://github.com/Vacuum-Tube/Build_with_collision_1 ]GitHub[/url]
 

@@ -1,10 +1,9 @@
-
 function data()
 	return {
 		info = {
 			name = "Build with Collision",
 			description = _("mod_desc"),
-			minorVersion = 2,
+			minorVersion = 3,
 			severityAdd = "NONE",
 			severityRemove = "NONE",
 			tags = {"Script Mod"},
@@ -15,12 +14,8 @@ function data()
 					tfnetId = 29264,
 				},
 			},
+			url = "https://www.transportfever.net/filebase/index.php?entry/6501-build-with-collision/",
+			tfnetId = 6501,
 		},
-		runFn = function (settings)
-			
-		end,
-		postRunFn = function (settings, modparams)
-			
-		end
 	}
 end

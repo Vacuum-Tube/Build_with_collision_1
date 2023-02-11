@@ -1,3 +1,6 @@
+2023-02-11:  v1.3
+- Fix for new game version 35153, for constructions the button is now down in the gamebar
+
 2022-01-20:  v1.2
 - Rare Bugs
 

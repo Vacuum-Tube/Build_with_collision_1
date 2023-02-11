@@ -11,34 +11,6 @@ local function proposalIsEmpty(proposal)
 		#proposal.toRemove==0
 end
 
--- local function proposalContainsParcels(proposal)
-	-- return #proposal.parcelsToRemove>0
--- end
-
--- local function proposalGetBulldozeIds(proposal)
-	-- local ids = {}
-	-- for i,elem in pairs(proposal.toRemove) do  -- first remove cons, includes edges
-		-- table.insert(ids, elem)
-	-- end
-	-- for i,seg in pairs(proposal.proposal.removedSegments) do
-		-- table.insert(ids, seg.entity)
-	-- end
-	-- return ids
--- end
-
--- local function bulldozeIds(ids)
-	-- for i,id in pairs(ids) do
-		-- if api.engine.entityExists(id) then
-			-- local stat, ret = pcall(function()
-				-- game.interface.bulldoze(id)  -- just applies normal proposal, doesnt ignore errors
-			-- end)
-			-- if not stat then
-				-- print("===== Build With Collision - Error Bulldoze:",id,ret)
-			-- end
-		-- end
-	-- end
--- end
-
 local function ScriptEvent(id,name,param)
 	api.cmd.sendCommand(api.cmd.make.sendScriptEvent("build_with_collision.lua", id, name, param))
 	-- game.interface.sendScriptEvent :  Assertion `!gameState.GetGameScriptStack().entries.empty()' failed.
@@ -75,9 +47,9 @@ local function buildProposalEvent(param,stopActionAfterBuild,soundEffect,sendRoa
 				cancelProposal()
 			end
 			tb.destroy()
-			if sendRoadtoolboxEvent then
+			-- if sendRoadtoolboxEvent then
 				-- ScriptEvent("__roadtoolbox__", "build_sharp_external", userdata2table(res.proposal.proposal))  -- use res: param is no more valid here; but even res still contains negative entity ids
-			end
+			-- end
 		else
 			print("===== Build With Collision - Build failed")
 			print("Critical:",res.resultProposalData.errorState.critical)
@@ -96,7 +68,7 @@ local function guiHandleEvent(id, name, param)
 		id=="streetTrackModifier" or
 		-- id=="streetTerminalBuilder" or -- signals+bus stops , never collision
 		id=="constructionBuilder" or
-		id=="bulldozer" -- produces errors
+		id=="bulldozer"
 	then
 		if name=="builder.proposalCreate" then
 			local status, err = pcall(function()
@@ -115,7 +87,11 @@ local function guiHandleEvent(id, name, param)
 						-- print("===== Build With Collision - COPY Proposal Empty !")
 						-- debugPrint(proposalparam.proposal)
 					-- end
-					if id=="trackBuilder" or id=="streetBuilder" or id=="constructionBuilder" then
+					if id=="trackBuilder" or id=="streetBuilder" then
+						tb_text = _("Build Anyway")
+						pos_offset = {x=30,y=-65}
+						proposalparam = param  -- gets empty if cancel proposal
+					elseif id=="constructionBuilder" then
 						tb_text = _("Build Anyway")
 						pos_offset = {x=30,y=-65}
 						proposalparam = param  -- gets empty if cancel proposal
@@ -128,30 +104,25 @@ local function guiHandleEvent(id, name, param)
 						pos_offset = {x=30,y=-65}
 						proposalparam = copy_userdata(param)  -- copy to prevent crash
 					end
-					-- if id~="bulldozer" then
-						tb.create(tb_text, function()  -- onClick
-							if proposalIsEmpty(proposalparam.proposal) then
-								print("===== Build With Collision - Proposal Empty !")
-							else
-								proposalparam.proposal.parcelsToRemove={}  -- parcels cause crash
-								buildProposalEvent(
-									proposalparam, 
-									id=="trackBuilder" or id=="streetBuilder",  -- cancelProposal
-									id~="bulldozer" and "construct" or "bulldozeMedium",  -- sound
-									id=="streetBuilder"  -- roadtoolbox
-								)
-							end
-							tb.destroy(true)
-						end,
-						nil, pos_offset )
-					-- else
-						-- ids = proposalGetBulldozeIds(param.proposal)
-						-- tb.create(_("Bulldoze Anyway"),function()
-							-- ScriptEvent("build_with_collision","bulldoze_anyway",ids)
-							-- tb.destroy(true)
-							-- game.gui.playSoundEffect("bulldozeMedium")
-						-- end,nil,pos_offset)
-					-- end
+					local onClick = function()
+						if proposalIsEmpty(proposalparam.proposal) then
+							print("===== Build With Collision - Proposal Empty !")
+						else
+							proposalparam.proposal.parcelsToRemove={}  -- parcels cause crash
+							buildProposalEvent(
+								proposalparam, 
+								id=="trackBuilder" or id=="streetBuilder",  -- cancelProposal
+								id~="bulldozer" and "construct" or "bulldozeMedium",  -- sound
+								id=="streetBuilder"  -- roadtoolbox
+							)
+						end
+						tb.destroy(true)
+					end
+					if id=="constructionBuilder" then  -- fix button to gamebar
+						tb.MenuButtonCreate(tb_text, onClick)
+					else  -- otherwise toolbutton next to cursor
+						tb.ToolButtonCreate(tb_text, onClick, nil, pos_offset )
+					end
 				else
 					tb.destroy()
 				end
@@ -161,7 +132,7 @@ local function guiHandleEvent(id, name, param)
 				debugPrint(param)
 				print(err)
 				print("===== Build With Collision - Please submit this message to the mod author - https://www.transportfever.net/filebase/index.php?entry/6501-build-with-collision/")
-				tb.create("Error - see console or stdout",nil,err,{x=30,y=-65})
+				tb.ToolButtonCreate("Error - see console or stdout",nil,err,{x=30,y=-65})
 			end
 		end
 	elseif (id=="menu.construction.railmenu" and name=="visibilityChange" and param==false) or
@@ -176,11 +147,6 @@ local function guiHandleEvent(id, name, param)
 	end
 end
 
--- local function handleEvent(src, id, name, param)
-	-- if src=="build_with_collision.lua" and id=="build_with_collision" and name=="bulldoze_anyway" then
-		-- bulldozeIds(param)
-	-- end
--- end
 
 function data()
 	return {
@@ -189,7 +155,7 @@ function data()
 		-- handleEvent = handleEvent,
 		--save = save,
 		--load = load,
-		--guiInit = guiInit,
+		-- guiInit = guiInit,
 		--guiUpdate = guiUpdate,
 		guiHandleEvent = guiHandleEvent,
 	}

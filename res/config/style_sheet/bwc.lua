@@ -4,25 +4,20 @@ function data()
     local result = {}
     local a = ssu.makeAdder(result)
 	
-	a("#bwc.toolTipContainer.toolTip", {
-		backgroundColor = ssu.makeColor(15, 35, 50, 100),
-		-- margin = { -70, 0, 50, 30 },
+	a("#bwc.toolTipContainer.toolButton", {
+		-- backgroundColor = ssu.makeColor(15, 35, 50, 000),
+		borderColor = ssu.makeColor(50, 50, 50, 255),
+		borderWidth = {2, 2, 2, 2},
 		gravity = { .0, .0 },
-		blurRadius = 16,
+		blurRadius = 8,
 	})
 	
-	a("#bwc.toolTipContainer.toolTip TextView", {
+	a("#bwc.toolTipContainer.toolButton TextView", {
 		backgroundColor = ssu.makeColor(50, 125, 200, 200),
 		fontSize = 18,
 	})
-	a("#bwc.toolTipContainer.toolTip TextView:hover", {
-		backgroundColor = ssu.makeColorOffset(50, 125, 200, 200, 25),
-	})
-	a("#bwc.toolTipContainer.toolTip TextView:active", {
+	a("#bwc.toolTipContainer.toolButton TextView:hover", {
 		backgroundColor = ssu.makeColorOffset(50, 125, 200, 200, 50),
-	})
-	a("#bwc.toolTipContainer.toolTip TextView:disabled", {
-		color = ssu.makeColor(25, 25, 25, 100)
 	})
 	
     return result
