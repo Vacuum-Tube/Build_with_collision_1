@@ -47,9 +47,11 @@ function tb.destroy(fromCallback)
 	if api.gui then
 		local elem = api.gui.util.getById(tb.id)
 		if elem then
+			-- print("tb.destroy",fromCallback)
+			-- print(elem:isVisible())
 			local layout
 			if tb.isOnMainButtonsLayout then
-				layout = api.gui.util.getById("mainButtonsLayout"):getItem(2)
+				layout = api.gui.util.getById("mainButtonsLayout"):getItem(2)  -- destroy can lead to crash when clicking X on asset menu
 			else
 				layout = api.gui.util.getById("toolTipContainer"):getLayout()
 			end

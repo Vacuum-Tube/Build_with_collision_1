@@ -118,11 +118,7 @@ local function guiHandleEvent(id, name, param)
 						end
 						tb.destroy(true)
 					end
-					if id=="constructionBuilder" then  -- fix button to gamebar
-						tb.MenuButtonCreate(tb_text, onClick)
-					else  -- otherwise toolbutton next to cursor
-						tb.ToolButtonCreate(tb_text, onClick, nil, pos_offset )
-					end
+					tb.ToolButtonCreate(tb_text, onClick, nil, pos_offset )
 				else
 					tb.destroy()
 				end
@@ -143,6 +139,7 @@ local function guiHandleEvent(id, name, param)
 			(id=="menu.construction" and name=="tabWidget.currentChanged") or
 			(id=="menu.bulldozer" and name=="toggleButton.toggle")
 	then
+		-- print("Destroy toolbutton",id,name,toString(param))
 		tb.destroy()
 	end
 end
