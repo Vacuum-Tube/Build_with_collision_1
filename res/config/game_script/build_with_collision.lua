@@ -3,6 +3,11 @@ local userdata2table = require"bwc.userdata2table"
 local copy_userdata = require"bwc.copy_userdata"
 require "serialize"
 
+local newMouseListSolution = tonumber(getBuildVersion())>35200
+
+local collisionProp = nil
+
+
 local function proposalIsEmpty(proposal)
 	return 
 		#proposal.proposal.addedSegments==0 and 
@@ -47,6 +52,7 @@ local function buildProposalEvent(param,stopActionAfterBuild,soundEffect,sendRoa
 				cancelProposal()
 			end
 			tb.destroy()
+			collisionProp = nil
 			-- if sendRoadtoolboxEvent then
 				-- ScriptEvent("__roadtoolbox__", "build_sharp_external", userdata2table(res.proposal.proposal))  -- use res: param is no more valid here; but even res still contains negative entity ids
 			-- end
@@ -79,25 +85,27 @@ local function guiHandleEvent(id, name, param)
 					and not proposalIsEmpty(param.proposal)
 					-- and not proposalContainsParcels(param.proposal)  -- parcels cause crash
 				then 
+					-- p=param--debug
+					-- pc=copy_userdata(param)--debug
+					-- param.data.errorState.messages:clear()  -- interesting alternative approach: building seems possible but is not successful
+					-- if proposalIsEmpty(param.proposal) then
+						-- print("===== Build With Collision - COPY Proposal Empty !")
+						-- debugPrint(param.proposal)
+					-- end
 					local tb_text
 					local pos_offset
-					-- p=param
-					local proposalparam = param -- = copy_userdata(param)
-					-- if proposalIsEmpty(proposalparam.proposal) then
-						-- print("===== Build With Collision - COPY Proposal Empty !")
-						-- debugPrint(proposalparam.proposal)
-					-- end
+					local proposalparam
 					if id=="trackBuilder" or id=="streetBuilder" then
 						tb_text = _("Build Anyway")
 						pos_offset = {x=30,y=-65}
 						proposalparam = param  -- gets empty if cancel proposal
 					elseif id=="constructionBuilder" then
 						tb_text = _("Build Anyway")
-						pos_offset = {x=30,y=-65}
+						pos_offset = {x=30,y=-75}
 						proposalparam = param  -- gets empty if cancel proposal
 					elseif id=="streetTrackModifier" then
 						tb_text = _("Upgrade Anyway")
-						pos_offset = {x=5,y=-38}
+						pos_offset = {x=30,y=-75}
 						proposalparam = copy_userdata(param)  -- copy to make possible upgrading after hovering; copy not possible for upgrades with construction...
 					elseif id=="bulldozer" then
 						tb_text = _("Bulldoze Anyway")
@@ -117,10 +125,21 @@ local function guiHandleEvent(id, name, param)
 							)
 						end
 						tb.destroy(true)
+						collisionProp = nil
 					end
-					tb.ToolButtonCreate(tb_text, onClick, nil, pos_offset )
+					if newMouseListSolution and (id=="constructionBuilder" or id=="streetTrackModifier" or id=="bulldozer") then
+						collisionProp = {
+							id = id,
+							onClick = onClick,
+						}
+						tb_text = tb_text .. "\n" .. _("Just click").." !"
+						tb.ToolButtonCreate(tb_text, false, nil, pos_offset )
+					else
+						tb.ToolButtonCreate(tb_text, onClick, nil, pos_offset )
+					end
 				else
 					tb.destroy()
+					collisionProp = nil
 				end
 			end)
 			if status==false then
@@ -131,16 +150,53 @@ local function guiHandleEvent(id, name, param)
 				tb.ToolButtonCreate("Error - see console or stdout",nil,err,{x=30,y=-65})
 			end
 		end
+	elseif (id=="menu.construction" and name=="tabWidget.currentChanged") then
+		tb.destroy(true)
 	elseif (id=="menu.construction.railmenu" and name=="visibilityChange" and param==false) or
 			(id=="menu.construction.roadmenu" and name=="visibilityChange" and param==false) or
 			(id=="menu.construction.rail.tabs" and name=="tabWidget.currentChanged") or
 			(id=="menu.construction.road.tabs" and name=="tabWidget.currentChanged") or
 			(id=="menu.construction.terrain.tabs" and name=="tabWidget.currentChanged") or
-			(id=="menu.construction" and name=="tabWidget.currentChanged") or
 			(id=="menu.bulldozer" and name=="toggleButton.toggle")
 	then
 		-- print("Destroy toolbutton",id,name,toString(param))
 		tb.destroy()
+		collisionProp = nil
+	end
+end
+
+local guiInit = function()
+	if newMouseListSolution then
+		-- local 
+		mainView = api.gui.util.getById("mainView")
+		 -- layer2 = mainView:getLayout():getItem(2)
+		-- layer0 = mainView:getLayout():getItem(0)
+		-- layer1 = mainView:getLayout():getItem(1)
+		-- layer2:insertMouseListener(function (evt) if evt.type == 2 then print("layer2") end return false end)
+		-- layer1:insertMouseListener(function (evt) if evt.type == 2 then print("layer1") end return false end)
+		-- layer0:insertMouseListener(function (evt) if evt.type == 2 then print("layer0") end return false end)
+		 -- v = layer2:getLayout():getItem(0)
+		 -- u = layer2:getLayout():getItem(1)
+		 -- w = layer2:getLayout():getItem(2)
+		 -- v:insertMouseListener(function (evt) if evt.type == 2 then print("v") end return false end)
+		 -- u:insertMouseListener(function (evt) if evt.type == 2 then print("u") end return false end)
+		 -- w:insertMouseListener(function (evt) if evt.type == 2 then print("w") end return false end)
+		 
+		-- local hudLayout = hud:getLayout()
+		-- local myComp = api.gui.comp.Component.new("bwcMouseListenerComp")
+		-- local rect = api.gui.util.Rect.new(0,0,-1,-1)
+		-- hudLayout:addItem(myComp, rect)
+		mainView:insertMouseListener( function (evt)
+			if evt.type == 2 and evt.button == 0 then
+				print("left click mainView")
+				if collisionProp then
+					print("Left click BWC event, collisionProp > exec onClick")
+					collisionProp.onClick()
+					return true
+				end
+			end
+			return false
+		end )
 	end
 end
 
@@ -152,7 +208,7 @@ function data()
 		-- handleEvent = handleEvent,
 		--save = save,
 		--load = load,
-		-- guiInit = guiInit,
+		guiInit = guiInit,
 		--guiUpdate = guiUpdate,
 		guiHandleEvent = guiHandleEvent,
 	}

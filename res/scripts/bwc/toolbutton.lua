@@ -1,8 +1,20 @@
-
 local tb = {}
-tb.id = "bwc.toolTipContainer.toolButton"
+local tbid = "bwc.tooltip"
 
-function tb.createComp(text,onClick,tooltip)
+function tb.createTooltipComp(text,tooltip)
+	local textView = api.gui.comp.TextView.new(text)
+	local layout = api.gui.layout.BoxLayout.new("VERTICAL")
+	layout:addItem(textView)
+	local toolTipComp = api.gui.comp.Component.new("bwcToolTip")
+	toolTipComp:setId(tbid)
+	toolTipComp:setLayout(layout)
+	if tooltip then
+		toolTipComp:setTooltip(tooltip)
+	end
+	return toolTipComp
+end
+
+function tb.createButtonComp(text,onClick,tooltip)
 	local textView = api.gui.comp.TextView.new(text)
 	local button = api.gui.comp.Button.new(textView,true)
 	if onClick then
@@ -10,20 +22,23 @@ function tb.createComp(text,onClick,tooltip)
 	end
 	local layout = api.gui.layout.BoxLayout.new("VERTICAL")
 	layout:addItem(button)
-	
-	local toolTipComp = api.gui.comp.Component.new("")
-	toolTipComp:setId(tb.id)
+	local toolTipComp = api.gui.comp.Component.new("bwcToolButton")
+	toolTipComp:setId(tbid)
 	toolTipComp:setLayout(layout)
 	if tooltip then
 		toolTipComp:setTooltip(tooltip)
 	end
-	
 	return toolTipComp
 end
 
 function tb.ToolButtonCreate(text,onClick,tooltip,pos_offset)
 	tb.destroy()
-	local toolTipComp = tb.createComp(text,onClick,tooltip)
+	local toolTipComp
+	if onClick then
+		toolTipComp = tb.createButtonComp(text,onClick,tooltip)
+	else
+		toolTipComp = tb.createTooltipComp(text,tooltip)
+	end
 	local containerLayout = api.gui.util.getById("toolTipContainer"):getLayout()
 	local mousePosition = game.gui.getMousePos()
 	pos_offset = pos_offset or {x=0,y=0}
@@ -37,7 +52,7 @@ end
 
 function tb.MenuButtonCreate(text,onClick)
 	tb.destroy()
-	local comp = tb.createComp(text,onClick)
+	local comp = tb.createButtonComp(text,onClick)
 	local mainButtonsLayoutRight = api.gui.util.getById("mainButtonsLayout"):getItem(2)
 	mainButtonsLayoutRight:addItem(comp)
 	tb.isOnMainButtonsLayout = true
@@ -45,7 +60,7 @@ end
 
 function tb.destroy(fromCallback)
 	if api.gui then
-		local elem = api.gui.util.getById(tb.id)
+		local elem = api.gui.util.getById(tbid)
 		if elem then
 			-- print("tb.destroy",fromCallback)
 			-- print(elem:isVisible())
@@ -66,7 +81,7 @@ function tb.destroy(fromCallback)
 end
 
 function tb.exists()
-	return api.gui.util.getById(tb.id)~=nil
+	return api.gui.util.getById(tbid)~=nil
 end
 
 return tb
