@@ -3,6 +3,8 @@ local userdata2table = require"bwc.userdata2table"
 local copy_userdata = require"bwc.copy_userdata"
 require "serialize"
 
+local tbSet
+
 local function proposalIsEmpty(proposal)
 	return 
 		#proposal.proposal.addedSegments==0 and 
@@ -115,15 +117,21 @@ local function guiHandleEvent(id, name, param)
 								id~="bulldozer" and "construct" or "bulldozeMedium",  -- sound
 								id=="streetBuilder"  -- roadtoolbox
 							)
+							tbSet = nil
 						end
 						tb.destroy(true)
 					end
 					if id=="constructionBuilder" then  -- fix button to gamebar
-						tb.MenuButtonCreate(tb_text, onClick)
+						if not tbSet then
+							tb.ToolButtonCreate(tb_text, onClick, nil, pos_offset )
+							tbSet = true
+						end
+						--tb.MenuButtonCreate(tb_text, onClick)
 					else  -- otherwise toolbutton next to cursor
 						tb.ToolButtonCreate(tb_text, onClick, nil, pos_offset )
 					end
 				else
+					tbSet = nil
 					tb.destroy()
 				end
 			end)
@@ -135,14 +143,14 @@ local function guiHandleEvent(id, name, param)
 				tb.ToolButtonCreate("Error - see console or stdout",nil,err,{x=30,y=-65})
 			end
 		end
-	elseif (id=="menu.construction" and name=="tabWidget.currentChanged") then
-		tb.destroy(true)
 	elseif (id=="menu.construction.railmenu" and name=="visibilityChange" and param==false) or
-	(id=="menu.construction.roadmenu" and name=="visibilityChange" and param==false) or
-	(id=="menu.construction.rail.tabs" and name=="tabWidget.currentChanged") or
-	(id=="menu.construction.road.tabs" and name=="tabWidget.currentChanged") or
-	(id=="menu.construction.terrain.tabs" and name=="tabWidget.currentChanged") or
-	(id=="menu.bulldozer" and name=="toggleButton.toggle") then
+			(id=="menu.construction.roadmenu" and name=="visibilityChange" and param==false) or
+			(id=="menu.construction.rail.tabs" and name=="tabWidget.currentChanged") or
+			(id=="menu.construction.road.tabs" and name=="tabWidget.currentChanged") or
+			(id=="menu.construction.terrain.tabs" and name=="tabWidget.currentChanged") or
+			(id=="menu.construction" and name=="tabWidget.currentChanged") or
+			(id=="menu.bulldozer" and name=="toggleButton.toggle")
+	then
 		tb.destroy()
 	end
 end

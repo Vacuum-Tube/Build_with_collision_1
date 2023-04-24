@@ -1,3 +1,6 @@
+2023-04-23:  v1.5 (thanks to wernerK)
+- Blue panel near construction/assets restored and working
+
 2023-02-11:  v1.3
 - Fix for new game version 35153, for constructions the button is now down in the gamebar
 
