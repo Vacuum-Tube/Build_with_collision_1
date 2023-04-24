@@ -135,14 +135,14 @@ local function guiHandleEvent(id, name, param)
 				tb.ToolButtonCreate("Error - see console or stdout",nil,err,{x=30,y=-65})
 			end
 		end
+	elseif (id=="menu.construction" and name=="tabWidget.currentChanged") then
+		tb.destroy(true)
 	elseif (id=="menu.construction.railmenu" and name=="visibilityChange" and param==false) or
-			(id=="menu.construction.roadmenu" and name=="visibilityChange" and param==false) or
-			(id=="menu.construction.rail.tabs" and name=="tabWidget.currentChanged") or
-			(id=="menu.construction.road.tabs" and name=="tabWidget.currentChanged") or
-			(id=="menu.construction.terrain.tabs" and name=="tabWidget.currentChanged") or
-			(id=="menu.construction" and name=="tabWidget.currentChanged") or
-			(id=="menu.bulldozer" and name=="toggleButton.toggle")
-	then
+	(id=="menu.construction.roadmenu" and name=="visibilityChange" and param==false) or
+	(id=="menu.construction.rail.tabs" and name=="tabWidget.currentChanged") or
+	(id=="menu.construction.road.tabs" and name=="tabWidget.currentChanged") or
+	(id=="menu.construction.terrain.tabs" and name=="tabWidget.currentChanged") or
+	(id=="menu.bulldozer" and name=="toggleButton.toggle") then
 		tb.destroy()
 	end
 end
