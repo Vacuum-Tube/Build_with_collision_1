@@ -127,12 +127,12 @@ local function guiHandleEvent(id, name, param)
 						tb.destroy(true)
 						collisionProp = nil
 					end
-					if newMouseListSolution and (id=="constructionBuilder" or id=="streetTrackModifier" or id=="bulldozer") then
+					if newMouseListSolution and (id=="constructionBuilder" or id=="streetTrackModifier") then
 						collisionProp = {
 							id = id,
 							onClick = onClick,
 						}
-						tb_text = tb_text .. "\n" .. _("Just click").." !"
+						tb_text = tb_text .. "\n" .. _("Click Right").." !"
 						tb.ToolButtonCreate(tb_text, false, nil, pos_offset )
 					else
 						tb.ToolButtonCreate(tb_text, onClick, nil, pos_offset )
@@ -152,6 +152,7 @@ local function guiHandleEvent(id, name, param)
 		end
 	elseif (id=="menu.construction" and name=="tabWidget.currentChanged") then
 		tb.destroy(true)
+		collisionProp = nil
 	elseif (id=="menu.construction.railmenu" and name=="visibilityChange" and param==false) or
 			(id=="menu.construction.roadmenu" and name=="visibilityChange" and param==false) or
 			(id=="menu.construction.rail.tabs" and name=="tabWidget.currentChanged") or
@@ -165,40 +166,24 @@ local function guiHandleEvent(id, name, param)
 	end
 end
 
-local guiInit = function()
-	if newMouseListSolution then
-		-- local 
-		mainView = api.gui.util.getById("mainView")
-		 -- layer2 = mainView:getLayout():getItem(2)
-		-- layer0 = mainView:getLayout():getItem(0)
-		-- layer1 = mainView:getLayout():getItem(1)
-		-- layer2:insertMouseListener(function (evt) if evt.type == 2 then print("layer2") end return false end)
-		-- layer1:insertMouseListener(function (evt) if evt.type == 2 then print("layer1") end return false end)
-		-- layer0:insertMouseListener(function (evt) if evt.type == 2 then print("layer0") end return false end)
-		 -- v = layer2:getLayout():getItem(0)
-		 -- u = layer2:getLayout():getItem(1)
-		 -- w = layer2:getLayout():getItem(2)
-		 -- v:insertMouseListener(function (evt) if evt.type == 2 then print("v") end return false end)
-		 -- u:insertMouseListener(function (evt) if evt.type == 2 then print("u") end return false end)
-		 -- w:insertMouseListener(function (evt) if evt.type == 2 then print("w") end return false end)
-		 
-		-- local hudLayout = hud:getLayout()
-		-- local myComp = api.gui.comp.Component.new("bwcMouseListenerComp")
-		-- local rect = api.gui.util.Rect.new(0,0,-1,-1)
-		-- hudLayout:addItem(myComp, rect)
-		mainView:insertMouseListener( function (evt)
-			if evt.type == 2 and evt.button == 0 then
-				print("left click mainView")
-				if collisionProp then
-					print("Left click BWC event, collisionProp > exec onClick")
-					collisionProp.onClick()
-					return true
-				end
+local guiInit = newMouseListSolution and function()
+	local mainView = api.gui.util.getById("mainView")  -- apparently, there is no children holding ONLY the rendering without UI
+	-- local hudLayout = hud:getLayout()
+	-- local myComp = api.gui.comp.Component.new("bwcMouseListenerComp")
+	-- local rect = api.gui.util.Rect.new(0,0,-1,-1)
+	-- hudLayout:addItem(myComp, rect)
+	mainView:insertMouseListener( function (evt)
+		if evt.type == 2 and evt.button == 2 then
+			print("right click mainView")
+			if collisionProp then
+				print("Right click BWC event, collisionProp > exec onClick")
+				collisionProp.onClick()
+				return true
 			end
-			return false
-		end )
-	end
-end
+		end
+		return false
+	end )
+end or nil
 
 
 function data()

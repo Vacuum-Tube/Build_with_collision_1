@@ -66,7 +66,7 @@ Source Code on [url=https://github.com/Vacuum-Tube/Build_with_collision_1 ]GitHu
 		["Build Anyway"] = "Trotzdem Bauen",
 		["Bulldoze Anyway"] = "Trotzdem Bulldozen",
 		["Upgrade Anyway"] = "Trotzdem Upgraden",
-		["Just click"] = "Einfach klicken",
+		["Click Right"] = "Rechts klicken",
 	}
 }
 end
