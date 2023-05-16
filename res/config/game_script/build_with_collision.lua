@@ -2,8 +2,10 @@ local tb = require "bwc.toolbutton"
 local userdata2table = require"bwc.userdata2table"
 local copy_userdata = require"bwc.copy_userdata"
 require "serialize"
+-- local timer = require"advanced_statistics.script.timer"
 
 local newMouseListSolution = tonumber(getBuildVersion())>35200
+local optionRightClickBuild = true
 
 local collisionProp = nil
 
@@ -14,6 +16,50 @@ local function proposalIsEmpty(proposal)
 		#proposal.proposal.removedSegments==0 and
 		#proposal.toAdd==0 and
 		#proposal.toRemove==0
+end
+
+local function isMouseOnUi()
+	-- local start = timer.start()
+	local mainView = api.gui.util.getById("mainView")
+	local layer0 = mainView:getLayout():getItem(0)
+	local layer2 = mainView:getLayout():getItem(2)
+	local hud = layer0:getLayout():getItem(0):getLayout()
+	local v = layer2:getLayout():getItem(0):getLayout():getItem(0):getLayout()
+	 -- u = layer2:getLayout():getItem(1):getLayout()
+	local w = layer2:getLayout():getItem(2):getLayout()
+	 --commonapi.ui.inspect(w)
+	local elements = {
+		api.gui.util.getById("mainMenuTopBarBG"),
+		api.gui.util.getById("mainMenuBottomBar"),
+		api.gui.util.getById("menu.finances"),
+		api.gui.util.getById("menu.layers"),
+		api.gui.util.getById("menu.fileMenuButton"),
+		api.gui.util.getById("menu.warningsButton"),
+	 }
+	local mouse = api.gui.util.getMouseScreenPos()
+	 for i,elem in pairs(elements) do
+		if elem:getContentRect():contains(mouse.x,mouse.y) and elem:isVisible() then
+			print(elem:getId(),"contains")
+			return true
+		end
+	end
+	for i=0,hud:getNumItems()-1 do
+		item = hud:getItem(i)
+		if item:getContentRect():contains(mouse.x,mouse.y) and item:isVisible() then
+			print("layer0",i,"contains")
+			return true
+		end
+	end
+	for i=0,v:getNumItems()-1 do
+		item = v:getItem(i)
+		-- print("layer2v",i,item:getId())
+		if item:getContentRect():contains(mouse.x,mouse.y) and item:isVisible() then
+			print("layer2v",i,"contains")
+			return true
+		end
+	end
+	-- print("isMouseOnUi",timer.stop())  -- max 1ms
+	return false
 end
 
 local function ScriptEvent(id,name,param)
@@ -66,6 +112,23 @@ local function buildProposalEvent(param,stopActionAfterBuild,soundEffect,sendRoa
 	end)
 end
 
+local function getOnClick(proposalparam,id)
+	return function()
+		if proposalIsEmpty(proposalparam.proposal) then
+			print("===== Build With Collision - Proposal Empty !")
+		else
+			proposalparam.proposal.parcelsToRemove={}  -- parcels cause crash
+			buildProposalEvent(
+				proposalparam, 
+				id=="trackBuilder" or id=="streetBuilder",  -- cancelProposal
+				id~="bulldozer" and "construct" or "bulldozeMedium",  -- sound
+				id=="streetBuilder"  -- roadtoolbox
+			)
+		end
+		tb.destroy(true)
+		collisionProp = nil
+	end
+end
 
 local function guiHandleEvent(id, name, param)
 	if
@@ -78,13 +141,12 @@ local function guiHandleEvent(id, name, param)
 	then
 		if name=="builder.proposalCreate" then
 			local status, err = pcall(function()
-				if
-					not param.data.errorState.critical --check collision but not critical
-					-- and #param.data.collisionInfo.collisionEntities>0  -- only for collision not other issues
-					and #param.data.errorState.messages>0
-					and not proposalIsEmpty(param.proposal)
-					-- and not proposalContainsParcels(param.proposal)  -- parcels cause crash
-				then 
+				collisionProp = nil
+				tb.destroy()
+				if proposalIsEmpty(param.proposal) or param.data.errorState.critical then
+					return
+				end
+				if #param.data.errorState.messages>0 then 
 					-- p=param--debug
 					-- pc=copy_userdata(param)--debug
 					-- param.data.errorState.messages:clear()  -- interesting alternative approach: building seems possible but is not successful
@@ -112,34 +174,25 @@ local function guiHandleEvent(id, name, param)
 						pos_offset = {x=30,y=-65}
 						proposalparam = copy_userdata(param)  -- copy to prevent crash
 					end
-					local onClick = function()
-						if proposalIsEmpty(proposalparam.proposal) then
-							print("===== Build With Collision - Proposal Empty !")
-						else
-							proposalparam.proposal.parcelsToRemove={}  -- parcels cause crash
-							buildProposalEvent(
-								proposalparam, 
-								id=="trackBuilder" or id=="streetBuilder",  -- cancelProposal
-								id~="bulldozer" and "construct" or "bulldozeMedium",  -- sound
-								id=="streetBuilder"  -- roadtoolbox
-							)
-						end
-						tb.destroy(true)
-						collisionProp = nil
-					end
 					if newMouseListSolution and (id=="constructionBuilder" or id=="streetTrackModifier") then
-						collisionProp = {
-							id = id,
-							onClick = onClick,
-						}
-						tb_text = tb_text .. "\n" .. _("Click Right").." !"
-						tb.ToolButtonCreate(tb_text, false, nil, pos_offset )
+						if not isMouseOnUi() then
+							collisionProp = {
+								id = id,
+								onClick = getOnClick(proposalparam,id),
+							}
+							tb_text = tb_text .. "\n" .. _("Click Right").." !"
+							tb.ToolButtonCreate(tb_text, false, nil, pos_offset )
+						end
 					else
-						tb.ToolButtonCreate(tb_text, onClick, nil, pos_offset )
+						tb.ToolButtonCreate(tb_text, getOnClick(proposalparam,id), nil, pos_offset )
 					end
-				else
-					tb.destroy()
-					collisionProp = nil
+				end
+				if optionRightClickBuild and (id=="trackBuilder" or id=="streetBuilder") then
+					collisionProp = {
+						id = id,
+						onClick = getOnClick(param,id),
+					}
+					-- tb.ToolButtonCreate("Click Right to Build", false, nil, {x=30,y=-65} )
 				end
 			end)
 			if status==false then
@@ -149,6 +202,9 @@ local function guiHandleEvent(id, name, param)
 				print("===== Build With Collision - Please submit this message to the mod author - https://www.transportfever.net/filebase/index.php?entry/6501-build-with-collision/")
 				tb.ToolButtonCreate("Error - see console or stdout",nil,err,{x=30,y=-65})
 			end
+		elseif name=="builder.apply" then
+			tb.destroy()
+			collisionProp = nil
 		end
 	elseif (id=="menu.construction" and name=="tabWidget.currentChanged") then
 		tb.destroy(true)
@@ -168,15 +224,11 @@ end
 
 local guiInit = newMouseListSolution and function()
 	local mainView = api.gui.util.getById("mainView")  -- apparently, there is no children holding ONLY the rendering without UI
-	-- local hudLayout = hud:getLayout()
-	-- local myComp = api.gui.comp.Component.new("bwcMouseListenerComp")
-	-- local rect = api.gui.util.Rect.new(0,0,-1,-1)
-	-- hudLayout:addItem(myComp, rect)
 	mainView:insertMouseListener( function (evt)
-		if evt.type == 2 and evt.button == 2 then
-			print("right click mainView")
+		if evt.type == 2 and evt.button == 2 and not isMouseOnUi() then
+			print("right click mainView without UI")
 			if collisionProp then
-				print("Right click BWC event, collisionProp > exec onClick")
+				print("collisionProp > exec onClick BwC")
 				collisionProp.onClick()
 				return true
 			end
