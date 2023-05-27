@@ -7,8 +7,8 @@ As you have probably experienced very often, building streets, tracks, stations 
 Now it is! With [b]Build with collision[/b] almost all problems that occur when building streets, tracks and constructions (collision, too much slope, too much curvature), can be ignored. When building a proposal which would normally not be applicable (but is not "critical"), a button [b][i]Build Anyway[/i][/b] is displayed.
 [list]
 [*]For streets and tracks, the button appears next to the cursor as with "Track/Street Builder Info". Eventually with collisions and unwanted snapping, you have to work with the "new shift key" (default: C).
-[*]For constructions/assets, there is now a button down in the gamebar. Hold right mouse to get there.
-[*]Upgrades now can be done outside the segment, after hovering.
+[*]For constructions/assets, just click right mouse!
+[*]Upgrades can now also be done with a simple right click.
 [*] [i]Bulldoze with collision.[/i] Sometimes the game doesn't allow bulldozing (e.g. bridge pillar collision), which can be bypassed now. [u]DON'T use it when vehicles are isolated or in a depot![/u]
 [/list]
 
@@ -31,6 +31,8 @@ Source Code on [url=https://github.com/Vacuum-Tube/Build_with_collision_1 ]GitHu
 [h3]If you like to support my mod development, you can donate here:[/h3]
 [url=https://paypal.me/VacuumTubeTPF ][img]https://raw.githubusercontent.com/Vacuum-Tube/Advanced_Statistics_1/main/pictures/paypal.png [/img][/url]   [b]Thank you![/b]
 ]],
+		bwC_RightClickBuild = "Rightclick for street/track construction",
+		bwC_RightClickBuild_TT = "When building streets/tracks in general, activate the right mouse button as trigger",
 	},
 	de = {
 		mod_desc = [[
@@ -39,8 +41,8 @@ Wie ihr sicher schon oft erlebt habt, kann das Bauen von Straßen, Gleisen, Bahn
 Jetzt schon! Mit [b]Build with collision[/b] können fast alle Probleme, die beim Bau von Straßen, Gleisen und Konstruktionen auftreten (Kollision, zu große Steigung, zu große Krümmung), ignoriert werden. Dazu wird beim Bauvorhaben, wenn es nicht auf normalem Weg durchführbar ist (und nicht "critical" ist), das Feld [b][i]Trotzdem Bauen[/i][/b] angezeigt.
 [list]
 [*]Bei Straßen und Gleisen erscheint der Button neben der Mausposition ähnlich wie beim "Track/Street Builder Info". Ggf muss man beim Verlegen mit Kollisionen und unerwünschtem Snappen mit der "neuen shift Taste" (default: C) arbeiten.
-[*]Bei Konstruktionen/Assets ist ab jetzt ein Button unten in der Leiste. Mit rechter Maustaste festhalten, um dort hinzukommen.
-[*]Upgrades können jetzt auch außerhalb des Segments nach dem Hovern ausgeführt werden.
+[*]Bei Konstruktionen/Assets einfach rechte Maustaste klicken!
+[*]Upgrades können jetzt auch mit einem einfachen Rechtsklick ausgeführt werden.
 [*] [i]Bulldoze with collision.[/i] Manchmal erlaubt das Spiel kein Bulldozen (z.B. Brückenpfeilerkollision), was hiermit umgangen werden kann. [u]NICHT benutzen wenn Fahrzeuge isoliert oder im Depot sind![/u]
 [/list]
 
@@ -67,6 +69,8 @@ Source Code on [url=https://github.com/Vacuum-Tube/Build_with_collision_1 ]GitHu
 		["Bulldoze Anyway"] = "Trotzdem Bulldozen",
 		["Upgrade Anyway"] = "Trotzdem Upgraden",
 		["Click Right"] = "Rechts klicken",
+		bwC_RightClickBuild = "Rechtsklick für Straßen/Gleisbau",
+		bwC_RightClickBuild_TT = "Beim Straßen/Gleisbau generell die rechte Maustaste als Trigger aktivieren",
 	}
 }
 end

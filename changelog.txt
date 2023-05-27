@@ -1,5 +1,12 @@
+2023-05-27:  v1.6
+- New solution with mouse listener function: construction/assets and upgrades can be done with just a right click!
+- Option to use right mouse as trigger for street/track construction
+
+2023-04-23:  v1.5
+- Blue panel near construction/assets restored and working  (thanks to wernerK)
+
 2023-02-11:  v1.3
-- Fix for new game version 35153, for constructions the button is now down in the gamebar
+- Fix for new game version 35153, for constructions the button is now down in the gamebar (crash when clicking on the X when asset menu is open!)
 
 2022-01-20:  v1.2
 - Rare Bugs

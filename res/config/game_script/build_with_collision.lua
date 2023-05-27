@@ -5,7 +5,7 @@ require "serialize"
 -- local timer = require"advanced_statistics.script.timer"
 
 local newMouseListSolution = tonumber(getBuildVersion())>35200
-local optionRightClickBuild = true
+local optionRightClickBuild = assert(game.bwC, "no game.bwC").optionRightClickBuild
 
 local collisionProp = nil
 
@@ -39,14 +39,14 @@ local function isMouseOnUi()
 	local mouse = api.gui.util.getMouseScreenPos()
 	 for i,elem in pairs(elements) do
 		if elem:getContentRect():contains(mouse.x,mouse.y) and elem:isVisible() then
-			print(elem:getId(),"contains")
+			-- print(elem:getId(),"contains")
 			return true
 		end
 	end
 	for i=0,hud:getNumItems()-1 do
 		item = hud:getItem(i)
 		if item:getContentRect():contains(mouse.x,mouse.y) and item:isVisible() then
-			print("layer0",i,"contains")
+			-- print("layer0",i,"contains")
 			return true
 		end
 	end
@@ -54,7 +54,7 @@ local function isMouseOnUi()
 		item = v:getItem(i)
 		-- print("layer2v",i,item:getId())
 		if item:getContentRect():contains(mouse.x,mouse.y) and item:isVisible() then
-			print("layer2v",i,"contains")
+			-- print("layer2v",i,"contains")
 			return true
 		end
 	end
@@ -106,7 +106,7 @@ local function buildProposalEvent(param,stopActionAfterBuild,soundEffect,sendRoa
 			print("===== Build With Collision - Build failed")
 			print("Critical:",res.resultProposalData.errorState.critical)
 			if #res.resultProposalData.collisionInfo.collisionEntities>0 then
-				print("Collision:",toString(res.resultProposalData.collisionInfo.collisionEntities))
+				-- print("Collision:",toString(res.resultProposalData.collisionInfo.collisionEntities))
 			end
 		end
 	end)
@@ -226,9 +226,9 @@ local guiInit = newMouseListSolution and function()
 	local mainView = api.gui.util.getById("mainView")  -- apparently, there is no children holding ONLY the rendering without UI
 	mainView:insertMouseListener( function (evt)
 		if evt.type == 2 and evt.button == 2 and not isMouseOnUi() then
-			print("right click mainView without UI")
+			-- print("right click mainView without UI")
 			if collisionProp then
-				print("collisionProp > exec onClick BwC")
+				-- print("collisionProp > exec onClick BwC")
 				collisionProp.onClick()
 				return true
 			end
