@@ -44,14 +44,14 @@ local function isMouseOnUi()
 		end
 	end
 	for i=0,hud:getNumItems()-1 do
-		item = hud:getItem(i)
+		local item = hud:getItem(i)
 		if item:getContentRect():contains(mouse.x,mouse.y) and item:isVisible() then
 			-- print("layer0",i,"contains")
 			return true
 		end
 	end
 	for i=0,v:getNumItems()-1 do
-		item = v:getItem(i)
+		local item = v:getItem(i)
 		-- print("layer2v",i,item:getId())
 		if item:getContentRect():contains(mouse.x,mouse.y) and item:isVisible() then
 			-- print("layer2v",i,"contains")
