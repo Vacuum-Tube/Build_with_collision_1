@@ -206,10 +206,8 @@ local function guiHandleEvent(id, name, param)
 			tb.destroy()
 			collisionProp = nil
 		end
-	elseif (id=="menu.construction" and name=="tabWidget.currentChanged") then
-		tb.destroy(true)
-		collisionProp = nil
-	elseif (id=="menu.construction.railmenu" and name=="visibilityChange" and param==false) or
+	elseif (id=="menu.construction" and name=="tabWidget.currentChanged") or
+			(id=="menu.construction.railmenu" and name=="visibilityChange" and param==false) or
 			(id=="menu.construction.roadmenu" and name=="visibilityChange" and param==false) or
 			(id=="menu.construction.rail.tabs" and name=="tabWidget.currentChanged") or
 			(id=="menu.construction.road.tabs" and name=="tabWidget.currentChanged") or

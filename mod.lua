@@ -6,7 +6,7 @@ function data()
 		info = {
 			name = "Build with Collision",
 			description = _("mod_desc"),
-			minorVersion = 7,
+			minorVersion = 8,
 			severityAdd = "NONE",
 			severityRemove = "NONE",
 			tags = {"Script Mod"},
