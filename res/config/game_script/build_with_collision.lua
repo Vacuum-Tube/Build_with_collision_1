@@ -135,7 +135,7 @@ local function guiHandleEvent(id, name, param)
 		id=="trackBuilder" or
 		id=="streetBuilder" or
 		id=="streetTrackModifier" or
-		-- id=="streetTerminalBuilder" or -- signals+bus stops , never collision
+		id=="streetTerminalBuilder" or -- signals+bus stops
 		id=="constructionBuilder" or
 		id=="bulldozer"
 	then
@@ -161,7 +161,7 @@ local function guiHandleEvent(id, name, param)
 						tb_text = _("Build Anyway")
 						pos_offset = {x=30,y=-65}
 						proposalparam = param  -- gets empty if cancel proposal
-					elseif id=="constructionBuilder" then
+					elseif id=="constructionBuilder" or id=="streetTerminalBuilder" then
 						tb_text = _("Build Anyway")
 						pos_offset = {x=30,y=-75}
 						proposalparam = param  -- gets empty if cancel proposal
@@ -174,7 +174,7 @@ local function guiHandleEvent(id, name, param)
 						pos_offset = {x=30,y=-65}
 						proposalparam = copy_userdata(param)  -- copy to prevent crash
 					end
-					if newMouseListSolution and (id=="constructionBuilder" or id=="streetTrackModifier") then
+					if newMouseListSolution and (id=="constructionBuilder" or id=="streetTrackModifier" or id=="streetTerminalBuilder") then
 						if not isMouseOnUi() then
 							collisionProp = {
 								id = id,
