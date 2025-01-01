@@ -1,5 +1,5 @@
 local tb = require "bwc.toolbutton"
-local userdata2table = require"bwc.userdata2table"
+-- local userdata2table = require"bwc.userdata2table"
 local copy_userdata = require"bwc.copy_userdata"
 require "serialize"
 -- local timer = require"advanced_statistics.script.timer"
@@ -26,7 +26,7 @@ local function isMouseOnUi()
 	local hud = layer0:getLayout():getItem(0):getLayout()
 	local v = layer2:getLayout():getItem(0):getLayout():getItem(0):getLayout()
 	 -- u = layer2:getLayout():getItem(1):getLayout()
-	local w = layer2:getLayout():getItem(2):getLayout()
+	-- local w = layer2:getLayout():getItem(2):getLayout()
 	 --commonapi.ui.inspect(w)
 	local elements = {
 		api.gui.util.getById("mainMenuTopBarBG"),
@@ -159,7 +159,7 @@ local function guiHandleEvent(id, name, param)
 					local proposalparam
 					if id=="trackBuilder" or id=="streetBuilder" then
 						tb_text = _("Build Anyway")
-						pos_offset = {x=30,y=-65}
+						pos_offset = {x=30,y=-70} -- info field from latest patch sometimes overlaps
 						proposalparam = param  -- gets empty if cancel proposal
 					elseif id=="constructionBuilder" or id=="streetTerminalBuilder" then
 						tb_text = _("Build Anyway")
@@ -170,11 +170,11 @@ local function guiHandleEvent(id, name, param)
 						pos_offset = {x=30,y=-75}
 						proposalparam = copy_userdata(param)  -- copy to make possible upgrading after hovering; copy not possible for upgrades with construction...
 					elseif id=="bulldozer" then
-						tb_text = _("Bulldoze Anyway")
+						tb_text = _("Bulldoze Anyway").."\n".._("bwC_bulldozerRightClickHint")
 						pos_offset = {x=30,y=-65}
 						proposalparam = copy_userdata(param)  -- copy to prevent crash
 					end
-					if newMouseListSolution and (id=="constructionBuilder" or id=="streetTrackModifier" or id=="streetTerminalBuilder") then
+					if newMouseListSolution and (id=="constructionBuilder" or id=="streetTrackModifier" or id=="streetTerminalBuilder" or id=="bulldozer") then
 						if not isMouseOnUi() then
 							collisionProp = {
 								id = id,

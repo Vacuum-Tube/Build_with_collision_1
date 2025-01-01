@@ -1,3 +1,6 @@
+2025-01-01:  v1.10
+- bulldoze with right click (be careful, watch the hint!)
+
 2023-12-03:  v1.9
 - enable BwC for streetTerminalBuilder (e.g. bus stations)
 

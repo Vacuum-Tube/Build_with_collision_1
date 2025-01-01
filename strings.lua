@@ -33,6 +33,7 @@ Source Code on [url=https://github.com/Vacuum-Tube/Build_with_collision_1 ]GitHu
 ]],
 		bwC_RightClickBuild = "Rightclick for street/track construction",
 		bwC_RightClickBuild_TT = "When building streets/tracks in general, activate the right mouse button as trigger",
+		bwC_bulldozerRightClickHint = "WARNING: Use with care! DON'T use it when vehicles are isolated or in a depot!",
 	},
 	de = {
 		mod_desc = [[
@@ -71,6 +72,7 @@ Source Code on [url=https://github.com/Vacuum-Tube/Build_with_collision_1 ]GitHu
 		["Click Right"] = "Rechts klicken",
 		bwC_RightClickBuild = "Rechtsklick für Straßen/Gleisbau",
 		bwC_RightClickBuild_TT = "Beim Straßen/Gleisbau generell die rechte Maustaste als Trigger aktivieren",
+		bwC_bulldozerRightClickHint = "WARNUNG: Mit Vorsicht benutzen! NICHT benutzen wenn Fahrzeuge isoliert oder im Depot sind!"
 	}
 }
 end
